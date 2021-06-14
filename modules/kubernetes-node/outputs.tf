@@ -10,13 +10,23 @@ output "node_name" {
 
 output "ipv4_address" {
   description = "IPv4 address of the server"
-  value       = hcloud_server.instance.ipv4_address
+  value       = module.tailscale_ipv4.stdout
 }
 
 output "ipv6_address" {
   description = "IPv6 address of the server"
-  value       = hcloud_server.instance.ipv6_address
+  value       = module.tailscale_ipv6.stdout
 }
+
+//output "ipv4_address" {
+//  description = "IPv4 address of the server"
+//  value       = hcloud_server.instance.ipv4_address
+//}
+//
+//output "ipv6_address" {
+//  description = "IPv6 address of the server"
+//  value       = hcloud_server.instance.ipv6_address
+//}
 
 output "ipv6_network" {
   description = "IPv6 network of the server"

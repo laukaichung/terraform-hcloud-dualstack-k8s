@@ -39,3 +39,9 @@ variable "labels" {
   type        = map(any)
   default     = {}
 }
+
+variable "tailscale_auth_key" {
+  description = "Tailscale pre-auth key"
+  type        = string
+}
+

@@ -10,3 +10,4 @@ terraform {
 locals {
   all_nodes = concat(module.master, module.worker)
 }
+

@@ -32,6 +32,7 @@ module "master" {
   firewall_ids = var.firewall_ids
 
   ssh_private_key_path = var.ssh_private_key_path
+  tailscale_auth_key = var.tailscale_auth_key
 }
 
 resource "random_id" "certificate_key" {

@@ -126,3 +126,8 @@ variable "primary_ip_family" {
     error_message = "The primary_ip_family value must be a \"ipv6\" or \"ipv4\"."
   }
 }
+
+variable "tailscale_auth_key" {
+  description = "Tailscale pre-auth key"
+  type        = string
+}

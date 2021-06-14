@@ -40,4 +40,40 @@ resource "hcloud_server" "instance" {
       "/root/prepare-node.sh",
     ]
   }
+
+  provisioner "file" {
+    source      = "${path.module}/scripts/tailscale.sh"
+    destination = "/root/tailscale.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /root/tailscale.sh",
+      "/root/tailscale.sh ${var.tailscale_auth_key}",
+    ]
+  }
+}
+
+module "tailscale_ipv6" {
+  source     = "matti/resource/shell"
+  depends_on = [hcloud_server.instance]
+
+  trigger = hcloud_server.instance.id
+
+  command = <<EOT
+    ssh -i ${var.ssh_private_key_path}  -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+      root@${hcloud_server.instance.ipv4_address} 'tailscale ip --6'
+  EOT
+}
+
+module "tailscale_ipv4" {
+  source     = "matti/resource/shell"
+  depends_on = [hcloud_server.instance]
+
+  trigger = hcloud_server.instance.id
+
+  command = <<EOT
+    ssh -i ${var.ssh_private_key_path}  -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+      root@${hcloud_server.instance.ipv4_address} 'tailscale ip --4'
+  EOT
 }
